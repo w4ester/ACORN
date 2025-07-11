@@ -17,6 +17,7 @@ import _thread
 import traceback
 import socket
 import logging
+import fickling
 
 LOG = logging.getLogger(__name__)
 
@@ -123,7 +124,7 @@ class Server:
         """
 
         try:
-            (fname,args)=pickle.load(self.fs)
+            (fname,args)=fickling.load(self.fs)
         except EOFError:
             raise ClientExit("read args")
         self.log("executing method %s"%(fname))
@@ -214,7 +215,7 @@ class Client:
         return self.get_result()
 
     def get_result(self):
-        (st, ret) = pickle.load(self.fs)
+        (st, ret) = fickling.load(self.fs)
         if st!=None:
             raise ServerException(st)
         else:
