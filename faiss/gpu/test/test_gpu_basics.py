@@ -8,8 +8,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import unittest
 import numpy as np
 import faiss
-import random
 from common_faiss_tests import get_dataset_2
+import secrets
 
 class ReferencedObject(unittest.TestCase):
 
@@ -253,7 +253,7 @@ class TestKnn(unittest.TestCase):
         params.numQueries = nq
         params.outDistances = faiss.swig_ptr(out_d)
         params.outIndices = faiss.swig_ptr(out_i)
-        params.device = random.randrange(0, faiss.get_num_gpus())
+        params.device = secrets.SystemRandom().randrange(0, faiss.get_num_gpus())
 
         faiss.bfKnn(res, params)
 
@@ -281,7 +281,7 @@ class TestKnn(unittest.TestCase):
         params.vectorType = faiss.DistanceDataType_F16
         params.queries = faiss.swig_ptr(qs_f16)
         params.queryType = faiss.DistanceDataType_F16
-        params.device = random.randrange(0, faiss.get_num_gpus())
+        params.device = secrets.SystemRandom().randrange(0, faiss.get_num_gpus())
 
         out_d_f16 = np.empty((nq, k), dtype=np.float32)
         out_i_f16 = np.empty((nq, k), dtype=np.int64)
@@ -289,7 +289,7 @@ class TestKnn(unittest.TestCase):
         params.outDistances = faiss.swig_ptr(out_d_f16)
         params.outIndices = faiss.swig_ptr(out_i_f16)
         params.outIndicesType = faiss.IndicesDataType_I64
-        params.device = random.randrange(0, faiss.get_num_gpus())
+        params.device = secrets.SystemRandom().randrange(0, faiss.get_num_gpus())
 
         faiss.bfKnn(res, params)
 
@@ -339,7 +339,7 @@ class TestAllPairwiseDistance(unittest.TestCase):
             params.queries = faiss.swig_ptr(qs)
             params.numQueries = nq
             params.outDistances = faiss.swig_ptr(out_d)
-            params.device = random.randrange(0, faiss.get_num_gpus())
+            params.device = secrets.SystemRandom().randrange(0, faiss.get_num_gpus())
 
             faiss.bfKnn(res, params)
 
@@ -372,7 +372,7 @@ class TestAllPairwiseDistance(unittest.TestCase):
 
             out_d_f16 = np.empty((nq, k), dtype=np.float32)
             params.outDistances = faiss.swig_ptr(out_d_f16)
-            params.device = random.randrange(0, faiss.get_num_gpus())
+            params.device = secrets.SystemRandom().randrange(0, faiss.get_num_gpus())
 
             faiss.bfKnn(res, params)
 
